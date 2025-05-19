@@ -1,0 +1,158 @@
+Julio Rene Alvarado Herrera 
+Cuarto perito en computacion 
+Carnet: 2021353
+
+
+Intrucciones de como hacer la Practica #1
+
+Recusrsos que se usan en la practica 
+2 Switches 
+2 Pc
+Cables de consola para configurar los dispositivos a atravez de los puerto de la consola
+Cables de Ethernet 
+
+Intrucciones
+Parte 1:
+Colocar las pc en la mesa y colocar los switches en el emutador 
+1. Enceder las Pc  y conectar los 2 switches
+2. Conectar pc a sus respectivos switches
+3. Inspeccionar visualmente las conexiones de la red
+
+Conectar los switches entre si con el cable Copper Cross-Over en el conctor fastEthernet 0/1 S1 como del S2
+Conectar los cable Copper Strainght-Through en el S1 en el conector fastEthernet 0/6 y conectarlo a pc-A
+Conectar los cable Copper Strainght-Through En el S2 en el conctor fastEthernet 0/18 y conectarlo a Pc-B 
+Conectar el cable consola al puerto Rs 232 PC-A y conectarlo al puerto de la consola de S1
+Conectar el cable consola al puerto Rs 232 PC-B y conectarlo al puerto de la consola de S2
+
+
+Parte 2:
+Estas intruciones aplican para las 2 Pcs
+1. Configurar la informacion de la dirrecion de ip estatica en la pc con las tablas de direccionamiento 
+Entrar a la pc>Ip configuration>desktop> poner la ip 
+cerrar la ventana de ip configuration
+ir al apartado de comand Prompt
+y colocar el siguiente codigo:
+C:\> ipconfig /all
+C:\> ping 192.168.1.1
+
+Parte 3: 
+Estas intruciones aplican para las 2 Pcs
+1. Ir al apartado Desktop>Terminal Configuracion y dar click en "OK"
+2. Dar Enter
+3. y colocar los siguientes comandos 
+
+Para entrara al modo de configuracion global:
+Switch> anable 
+switch# configure terminal (o la version abreviada config termi)
+
+Para cambiar al nombre de switch:
+switch(cofig)#hostname S1 
+
+Para cambiar la contraseña en modo priviligiado:
+S1(config)# enable secret class
+S1(cofig)# line console 0
+S1(cofig-line)#password cisco
+S1(cofig-line)#login 
+S1(cofig-line)#exit
+
+Para guardar los cambios del modo pribilegiados:
+S1# copy running-config startup-config
+
+Para mostrar la configuracion usar el comando 
+S1# show running-config
+
+Para mostrar la version
+S1# Show version
+
+
+Para cambiar la contraseña del modo de usuario
+S1#password class
+S1#login
+S1#exit
+
+
+Para configurar una intefaz virtual de switch
+S1(config)#int vlan 1
+S1(cofig-if)# ip address 192.168.1.1 255.255.255.0
+S1(config-if)# no shutdown
+S1(config-if)# exit
+S1(config)# ip default-gateway 192.168.1.1
+
+Para poner un mensaje de advertencia de personal no autorizado
+S1# configure terminal
+S1(config)# banner motd #Authorized Access Only# (se puede poner con # o tambien con $)
+
+Guardar las configuraciones
+S1# show running-config 
+
+
+Explicacion de los comandos 
+Switch>enable
+Regrese al modo EXEC con privilegios utilizando el disable comando.
+
+Switch#disable
+Vuelva a ingresar al modo EXEC privilegiado.
+
+Switch>enable
+Ingrese al modo de configuración global con el comando configure terminal.
+
+Switch#configure terminal
+Salga del modo de configuración global y regrese al modo EXEC privilegiado utilizando el exit comando.
+
+Switch(config)#exit
+Vuelva a ingresar al modo de configuración global.
+
+Switch#configure terminal
+Introduzca el modo de subconfiguración de línea para el puerto de consola mediante el line console 0 comando.
+
+Switch(config)#line console 0
+Ingrese al modo de configuración global con el comando exit.
+
+Switch(config-line)#exit
+Ingrese al modo de subconfiguración de línea VTY con el comando. line vty 0 15
+
+Switch(config)#line vty 0 15
+Vuelva al modo de configuración global.
+
+Switch(config-line)#exit
+Ingrese al modo de subconfiguración de la interfaz VLAN 1 con el comando. interface vlan 1
+
+Switch(config)#interface vlan 1
+Desde el modo de configuración de interfaz, cambie al modo de subconfiguración de la consola de línea mediante el comando de configuración line console 0 global.
+
+Switch(config-if)#line console 0
+Regrese al modo EXEC privilegiado utilizando el comando. end
+
+Tabulación	Completa una entrada de nombre de comando parcial.
+Retroceso	Borra el carácter a la izquierda del cursor.
+Ctrl+D	Borra el caracter donde está el cursor.
+Ctrl+K	Borra todos los caracteres desde el cursor hasta el final de la línea de comandos.
+Esc D	Borra todos los caracteres desde el cursor hasta el final de la palabra.
+Ctrl+U o Ctrl+X	Borra todos los caracteres desde el cursor hasta el comienzo de la línea de comando
+Ctrl+W	Borra la palabra a la izquierda del cursor.
+Ctrl+A	Desplaza el cursor hacia el principio de la línea.
+Flecha izquierda o Ctrl+B	Desplaza el cursor un carácter hacia la izquierda.
+Esc B	Desplaza el cursor una palabra hacia la izquierda.
+Esc F	Desplaza el cursor una palabra hacia la derecha.
+Flecha derecha o Ctrl+F	Desplaza el cursor un carácter hacia la derecha.
+Ctrl+E	Desplaza el cursor hasta el final de la línea de comandos.
+Flecha arriba o Ctrl+P	Recupera los comandos en el búfer de historial, comenzando con la mayoría comandos recientes
+Ctrl+R o Ctrl+I o Ctrl+L:Vuelve Mostrar el indicador del sistema y la línea de comando después de que se muestra un mensaje de consola recibido.
+
+Nota: Aunque la Delete clave normalmente elimina el carácter a la derecha de la solicitud, la estructura del comando 
+IOS no reconoce la tecla Eliminar.
+
+Cuando una salida de comando produce más texto del que se puede mostrar en una ventana de terminal, 
+el IOS mostrará una “--More--” solicitud. En la tabla siguiente se describen las pulsaciones de teclas que 
+se pueden utilizar cuando se muestra esta solicitud.
+
+Tecla Enter:Muestra la siguiente línea.
+Barra espaciadora: Muestra la siguiente linea.
+Cualquier otra tecla	Termina la cadena que se muestra y vuelve al modo EXEC con privilegios.
+En esta tabla se enumeran los comandos utilizados para salir de una operación.
+
+Título de la tabla
+Pulsación de teclas	Descripción
+Ctrl-C	Cuando está en cualquier modo de configuración, finaliza el modo de configuración y regresa al modo EXEC privilegiado. Cuando está en modo de configuración, aborta de nuevo al comando como indicador de comandos.
+Ctrl-Z	Cuando está en cualquier modo de configuración, finaliza el modo de configuración y regresa al modo EXEC privilegiado.
+Ctrl-Shift-6	Secuencia de interrupción multipropósito utilizada para anular búsquedas DNS, traceroutes, pings, etc.

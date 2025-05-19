@@ -1,0 +1,25 @@
+Capitulo 11
+AND se usa para determinar la dirección de red.
+Y lógico es la comparación de dos bits que producen los resultados que
+ se muestran a continuación. Observe que solo mediante 1 AND 1 se obtiene 1. Cualquier otra combinación da como resultado un 0.
+ 1 Y 1 = 1
+0 Y 1 = 0
+1 Y 0 = 0
+0 Y 0 = 0
+
+Nota: En la lógica digital, 1 representa True y 0 representa False. Cuando se utiliza una operación AND, ambos valores de entrada
+ deben ser True (1) para que el resultado sea True (1).
+ eso explica el porque 1 y 0 da como resultado 0 
+ 
+ Todos los dispositivos dentro de la misma red deben tener la misma máscara de subred y los mismos bits de red. Solo 
+ los bits del host serán diferentes y deben ser únicos.
+ 
+ 
+ Un usuario emite un comando ping 2001: db8: FACE: 39 :: 10 y recibe una respuesta que incluye un código de 2. 
+ ¿Qué representa este código?
+ cuando es
+ codigo 0 red no disponible 
+ CODIGO 1 HOST INALCANZABLE
+ codigo 2 mas alla del alcance de la direccion de origen
+ codigo 3 dirreccion inalcanzable
+ codigo 4 es PUERTO inalcanzable 

@@ -1,0 +1,150 @@
+Julio Rene Alvarado Herrera 
+
+Para comenezar colocar los rauter y los switches en el lugar del enrutador 
+
+Luego colocar las pc sobre la mesa 
+
+Luego empezamos a conectar los calbles a cada uno de sus respectivos lugares 
+empezamos por el swicht 2 colocamos un calble verde a en el switch1 en el puerto g1/0
+y el otro extremo del cable lo colocamoes en el rauter en el puerto g0/0
+
+Despues agarramos otro cable verde y lo empezamos colocando en el rauter en el puerto gigabitEthernet 0/01
+y el otro extremo lo conectamos en el switch 1 en el puerto gigabitEthernet 0/1 
+
+Luego agarramos otro cable verde y lo conectamos al switch 1 y colocamos en el puerto fastethernet 0/24
+y lo colocamos en el puerto Ethernet de la pc 0
+
+Despues agarramos otro cable verde y colocamos en el puerto fastethernet 0/24 del switch2 y el otro 
+extremos lo colocamos en el pueto Ethernet de la pc 1
+
+Luego para empezar a configurar los rauter empezamos por agarrar un cable consola y lo conectamos al puerto consola de la pc
+y depsues lo colocamos en el otro extremo el puerto consola del rauter
+
+Prendemos las pc y empezamos a configurar las mismas, tambien prendemos el rauter 
+
+Nos vamos al apartado de terminal y vamos poniendo estos comandos 
+
+Configuracion del router:
+
+router> en 
+router# config t
+Router (config)# hostname R1
+R1 (config)#enable secret juliorene1
+R1(config)#line console 0
+R1(config-line)#password juliorene2
+R1(config-line)#login
+R1(config-line)#exit 
+R1(config)#service password-encryption
+R1(config)#ip domain-name ccna7.net
+R1(config)#username admin secret juliorene3
+R1(config)#crypto key generate rsa general-keys modulus 1024
+
+
+R1(config)#line vty 0 15
+R1(config-line)#transport input ssh 
+R1(config-line)#login local 
+R1(config-line)#exit
+R1(config)#
+
+
+R1> en 
+Password: poner la contraseña de antes 
+
+R1#conf term 
+
+R1(config)#int g0/0/0 
+R1(config-if)#description subnet 0
+R1(config-if)#ip address 10.0.4.1 255.255.255.240
+R1(config-if)#ipv6 address 2001:db8:acad:0::1/64
+R1(config-if)#ipv6 address fe80:1 link-local
+R1(config-if)#no shutdown
+
+R1(config-if)#exit 
+R1(config)#ipv6 unicast-rounting
+R1(config)#exit
+R1# copy running-config starup-config 
+
+luego de esto desconectamos el clabe consola del rauter y lo conectamos al switch1 y empezamos a programar el switch1
+
+Configuracion del switch: (Se usa la misma configuracion en los 2 switch lo unico que cambia es el nombre )
+
+Switch>en
+Switch#conf term 
+Switch(config)#hostname S1
+S1(config)#enable secret juliorene1
+S1(config)#line console 0
+S1(config-line)#password juliorene2
+S1(config-line)#login
+S1(cofig)#exit
+S1(config)#service password-encryption 
+S1(config)#ip domain-name ccna7.net 
+S1(config)#username admin secret juliorene3
+S1(config)#crypto key generate rsa general-keys modulus 1024
+
+S1(config-line)#line vty 0 15 
+S1(config-line)#transport input ssh
+S1(config-line)#login local
+S1(config-line)#exit
+S1(config)#int vlan 1
+S1(config-if)#ip address 10.0.0.2 255.255.252.0
+S1(config-if)#no shutdown 
+S1(config-if)#exit
+S1(config)#ip default-gateway 100.0.1
+S1(config)#exit 
+S1# copy run start 
+
+Luego de terminar la configuracion terminal configuramos la ip 
+Empezamos configurando la pc0 con las siguentes ip 
+
+Ipv4 address: 10.0.3.254
+subnet mask 255.255.252.0
+default gateway: 10.0.0.1
+Dns server:0.0.0.0
+Ipv6 address: 2001:db8:ecad:1::0
+link local address: FE80::20C:CFF:FE35:E109
+Default gateway: fe80::1
+
+
+Ahora configuramos la ip de la PC1
+Ipv4 address: 10.0.4.14
+subnet mask: 255.255.255.240
+default gateway: 10.0.4.1
+Dns server:0.0.0.0
+Ipv6 address: 2001:db8:acad:0::b/64
+link local address: FE80::290:21FF:FEA3:8680
+Default gateway: fe80::1
+
+luego nos vamos a command pronpt y colocamos los siguientes comandos para ver si estan bien las ip 
+
+C:∖> ping 10.0.4.1
+C:∖> ping 2001:db8:acad:0
+C:∖> ping 2001:db8:acad:1::1
+C:∖> ping 10.0.0.2
+C:∖> ping 10.0.4.2
+C:∖> ping 10.0.4.14
+C:∖> ping 2001:db8:acad:0::b
+
+
+C:∖> ping ssh -1 admin 10.0.4.1
+password:
+
+R1> exit
+
+C:∖> ping ssh -1 admin 10.0.4.2
+password:
+
+S2> exit
+
+C:∖> ping ssh -1 admin 10.0.4.2
+ 
+S1> exit 
+
+luego nos vamos otra vez a la terminal y pones estos siguientes comandos 
+
+S2# show vlan brief 
+S2# show ip interface brief
+S2# show mac address-table 
+
+Luego desconectamos el cable consola y lo conectamos otra vez al rauter y ponemos estos comandos 
+R1# show ipv6 router    
+R1# show ip int g0/0/0 

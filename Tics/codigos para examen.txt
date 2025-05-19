@@ -1,0 +1,201 @@
+Router
+>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#no ip domain-lookup
+Router(config)#hostname R1
+R1(config)#banner motd #acceso no autorizado#
+R1(config)#interface g0/0/0
+R1(config-if)#description connect to subnet B
+R1(config-if)#ip adress 172.16.1.65 255.255.255.224igual que esto
+                   ^
+% Invalid input detected at '^' marker.
+	
+R1(config-if)#ip address 172.16.1.65 255.255.255.224
+R1(config-if)#no shutdown
+R1(config)#exit
+
+conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface g0/0/1
+R1(config-if)#description connect to subnet A
+R1(config-if)#ip address 172.16.1.1 255.255.255.192 esto se cambia xd obvio
+R1(config-if)#no shutdown
+R1(config-if)#exit
+R1(config)#enable secret ThisisaSecret
+R1(config)#service password-encryption
+R1(config)#security password min-length 10
+R1(config)#ip domain name netsec.com
+R1(config)#username netadmin secret Ci$co12345
+R1(config)#line console 0
+R1(config-line)#password C@nsPassw!
+R1(config-line)#login
+R1(config-line)#exit
+R1(config)#line vty 0 15
+R1(config-line)#transport input ssh
+R1(config-line)#login local
+R1(config-line)#exit
+R1(config)#crypto key generate rsa
+R1(config)#exit
+R1#copy running-config startup-config
+
+
+
+
+Switch
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#no ip domain-lookup
+Switch(config)#hostname S1
+S1(config)#banner motd #acceso no autorizado#
+S1(config)#interface vlan 1 
+S1(config-if)#description switch subnet A or l
+S1(config-if)#ip address 172.16.1.2 255.255.255.192 esto se cambia xd
+S1(config-if)#no shutdown
+S1(config-if)#exit
+S1(config)#ip default-gateway 172.16.1.1
+S1(config)#enable secret ThisisaSecret
+S1(config)#service password-encryption
+S1(config)#ip domain-name netsec.com
+S1(config)#username netadmin secret Ci$co12345
+S1(config)#line console 0
+S1(config-line)#password C@nsPassw!
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)#line vty 0 15
+S1(config-line)#transport input ssh
+S1(config-line)#login local 
+S1(config-line)#transport input ssh
+S1(config-line)#exit
+S1(config)#crypto key generate rsa
+1024
+
+S1(config)#interface range f0/1-4, f0/7-24, g0/1-2
+
+S1(config-if-range)#description puertos sin utilizar
+S1(config-if-range)#sh
+end
+S1#copy running-config startup-config
+
+
+ping 172.16.1.62 PC B
+ping 172.16.1.94 PC A
+
+
+
+
+NO ES MIO ES DE OTRA PERSONA 
+
+Examen 28/02/2023
+PTSA CCNA v7
+
+		PC-A
+//NOMBRE Y BANNER//
+Router(config)#no ip domain-lookup
+Router(config)#hostname R1
+R1 (config) #banner motd #unauthorized access#
+
+//INTERFAZ G0/0/0//
+R1(config)#interface g0/0/0
+R1(config-if)#description connect to subnet B
+R1(config-if)#ip address 172.16.1.65 255.255.255.224
+R1(config-if)#no shutdown 
+
+//INTERFAZ G0/0/1//
+R1(config)#interface g0/0/1
+R1(config-if)#description connect to subnet A
+R1(config-if)#ip address 172.16.1.65 255.255.255.224
+R1(config-if)#no shutdown 
+R1(config-if)#exit
+
+//CONTRASEÑA DE PRIVILEGIADO Y CARACTERES MÍNIMOS//
+R1(config)#enable secret ThisisaSecret
+R1(config)#service password-encryption
+R1(config)#security passwords min-length 10
+
+//IP DOMAIN-NAME Y CONTRASEÑA//
+R1(config)#ip domain-name netsec.com 
+R1(config)#username netadmin secret Ci$co12345
+
+//CONTRASEÑAS DE USUARIO//
+R1(config)#line console 0
+R1(config-line)#password C@nsPassw!
+R1(config-line)#login
+R1(config-line)#exit
+
+//TIPO DE ACCESO REMOTO//
+R1(config)#line vty 0 15
+R1(config-line)#transport input ssh 
+R1(config-line)#login local 
+R1(config-line)#exit
+
+//CRYPTO KEY GENERATE RSA DE 1024 BITS//.
+R1(config)#crypto key generate rsa
+The name for the keys will be: R1.netsec.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+
+
+
+		PC-B
+//NOMBRE, BANNER Y NO IP DOMAIN-LOOKUP//		
+Switch>enable 
+Switch#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#no ip domain-lookup
+Switch(config)#hostname S1
+S1(config)#banner motd #unathorized access#
+
+//CONFIGURAR DIRECCIÓN IP A VLAN 1// 
+S1(config)#interface vlan 1
+S1(config-if)#description switxh subnet A or 1
+S1(config-if)#ip address 172.116.1.2 255.255.255.192
+S1(config-if)#no shutdown
+
+S1(config-if)#
+%LINK-5-CHANGED: Interface Vlan1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+
+S1(config-if)#exit		
+
+//DIRECCIÓN DE DEFAULT GATEWAY//
+S1(config)#ip default-gateway 172.16.1.1
+
+//CONTRASEÑA DE PRIVILEGIADO//
+S1(config)#enable secret ThisisaSecret
+S1(config)#service password-encryption
+
+//NOMBRE DE IP Y CONTRASEÑA DE TAL//
+S1(config)#ip domain-name netsec.com
+S1(config)#username netadmin secret Ci$co12345
+
+//CONTRASEÑA DE USUARIO//
+S1(config)#line console 0
+S1(config-line)#password C@nsPassw!
+S1(config-line)#login
+S1(config-line)#exit
+
+//TIPO DE ACCESO REMOTO Y CRYPTO KEY GENERATE RSA DE 1024 BITS//
+S1(config)#line vty 0 15
+S1(config-line)#transport input ssh 
+S1(config-line)#login local
+S1(config-line)#exit
+S1(config)#crypto key generate rsa
+The name for the keys will be: S1.netsec.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+//NÚMEROS DE PUERTOS NO UTILIZADOS QUE ESTÁN LIBRES PARA HOST//
+S1(config)#interface range f0/1-4, f0/7-24, g0/1-2
+*Mar 1 0:27:13.264: %SSH-5-ENABLED: SSH 1.99 has been enabled
+S1(config-if-range)#description puertos sin utlizar 
+S1(config-if-range)#shutdown

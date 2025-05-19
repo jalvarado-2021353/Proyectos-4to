@@ -1,0 +1,179 @@
+Configuramos el ip a la pc
+
+luego iniciamos el modo de exec privilegiado
+Router>ENABLE
+Router#
+Luego al modo Configuracion global
+Router#config t
+Router(config)#
+Cambiamos el nombre a RTA
+Router(config)#hostname RTA
+RTA(config)#
+Configuraremos el direccionamiento de ip en red y habilitaremos la interfases
+RTA(config)#interface gigabitEthernet 0/0
+RTA(config-if)#ip address 172.16.1.1 255.255.255.0
+RTA(config-if)#no shutdown
+
+RTA(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+RTA(config-if)#exit
+
+Luego se configura la contraseña
+RTA(config)#service password-encryption
+RTA(config)#security password min-length 10
+RTA(config)#enable secret class
+% Password too short - must be at least 10 characters. Password not configured.
+RTA(config)#no ip domain-lookup
+RTA(config)#ip domain-lookup
+RTA(config)#ip domain-name CCNA.ccm
+RTA(config)#username admin secret juliorene1 o juliorene2
+
+RTA(config)#crypto key generate rsa
+% You already have RSA keys defined named RTA.CCNA.ccm .
+% Do you really want to replace them? [yes/no]: yes
+The name for the keys will be: RTA.CCNA.ccm
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+RTA(config)#login block-for 180 attempts 4 within 120
+*Feb 28 23:20:29.126: %SSH-5-ENABLED: SSH 1.99 has been enabled
+RTA(config)#line vty 0 4
+RTA(config-line)#transport input ssh
+RTA(config-line)#login local
+RTA(config-line)#exec-timeout 6
+RTA(config-line)#exit
+
+RTA(config)#exit
+RTA#
+%SYS-5-CONFIG_I: Configured from console by console
+RTA#copy running-config startup-config 
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+
+Ahora al command promt
+Cisco Packet Tracer PC Command Line 1.0
+C:\>ssh /?
+Cisco Packet Tracer PC SSH
+
+Usage: SSH -l username target
+
+C:\>
+
+En el Switch nos vamos a CLI
+
+Switch>enable
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname SW1
+SW1(config)#interface vlan1
+SW1(config-if)#ip address 172.16.1.2 255.255.255.0
+SW1(config-if)#no shutdown
+
+SW1(config-if)#
+%LINK-5-CHANGED: Interface Vlan1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to up
+
+SW1(config-if)#exit
+SW1(config)#ip de
+SW1(config)#ip default-gateway 172.16.1.1
+SW1(config)#interface range f 
+SW1(config)#interface range fast
+
+SW1(config)#interface range f0/2-24, g0/2
+SW1(config-if-range)#shutdown
+
+%LINK-5-CHANGED: Interface FastEthernet0/2, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/3, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/5, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/18, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+
+%LINK-5-CHANGED: Interface FastEthernet0/24, changed state to administratively down
+
+%LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+SW1(config-if-range)#
+
+SW1(config-if-range)#exit
+SW1(config)#service p
+SW1(config)#service password-encryption 
+SW1(config)#enable secret juliorene1
+SW1(config)#no ip domain-lookup
+SW1(config)#ip domain-name CCNA.com
+SW1(config)#username admin password juliorene2
+SW1(config)#crypto key generate rsa
+The name for the keys will be: SW1.CCNA.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+
+SW1(config)#line vty 0 4
+*Feb 28 23:40:10.864: %SSH-5-ENABLED: SSH 1.99 has been enabled
+SW1(config-line)#transport input ssh
+SW1(config-line)#login local
+SW1(config-line)#exec-timeout 6
+SW1(config-line)#exit
+SW1(config)#exit
+SW1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+SW1#copy running-config startup-config
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+SW1#
+	
+
+
+
+
+
+
